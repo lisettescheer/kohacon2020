@@ -1,0 +1,49 @@
+//Rename Author and Collection fields
+$(document).ready(function() {
+$("#add_suggestion_form label:contains('Author')").text('Author/Key Actors:');
+$("#add_suggestion_form label:contains('Collection title:')").text('Youth or Adult Item:');
+   });  
+
+//Add hidden classes to fields we want to hide
+$(document).ready(function() {
+$("#add_suggestion_form li:contains('Publication place')").addClass("hideme");
+$("#add_suggestion_form li:contains('Quantity')").addClass("hideme");
+   $("#add_suggestion_form li:contains('Publisher')").addClass("hideme");
+   $("#add_suggestion_form li:contains('Standard number (ISBN, ISSN or other):')").addClass("hideme");
+   });  
+//Hide fields with the hidemee class
+$(document).ready(function() {
+$(".hideme").hide();
+   });
+
+//Hide the form and add the hidden information divs
+$(document).ready(function() {
+  $('#add_suggestion_form').addClass("formhide");
+$('#add_suggestion_form').prepend(
+    $('<div class="latah" hidden="">').prepend("Latah County Library District Patrons are limited to 2 requests per month. Please fill out 1 request for each book in a series or season in a TV show."))  
+      $('#add_suggestion_form').prepend( $('<div class="lewiston" hidden="">').prepend("The Lewiston City Library reviews two (2) purchase suggestion per patron monthly. You will receive a response once your suggestions have been reviewed. Including specific information about the item you are suggesting will help our librarians more accurately identify the item being considered.")) });
+//Set the loggedinbranch variable and check for that variable      
+      $(document).ready(function() {
+let loggedinbranch = $('.loggedinusername').attr('data-branchcode')
+if ( loggedinbranch == "BOV") {
+//remove attributes/classes based on the variable
+    $(".latah").removeAttr('hidden');
+    $("formhide").removeClass("formhide");
+}
+//If the branch doesn't match, on the opac-suggestions page replace the form with the heading. 
+else  if (window.location.href.indexOf("opac-suggestions.pl") > -1) {
+  $("div.span10").replaceWith(
+    "<h2>Your library does not currently accept online purchase suggestions. Please contact your local branch for more information.</h2>");
+}
+});
+//School Closure JQ (instead of just hiding them as a pickup  location) needed for each branch. 
+$(document).ready(function() {
+$("option[value='ASH']").attr("disabled","true").append(' - Closed for the Summer');
+//To block patrons from selecting ASH as a pickup location: 
+if($("select[name='branch'] :selected").val() =="ASH") {
+alert("Your home branch is closed for the summer.  Please select a different pickup location.");
+$("select[name='branch'] option:contains('Asotin High')").prop("selected",false);
+}
+});
+
+
