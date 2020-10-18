@@ -1,0 +1,25 @@
+//--------Report with dropdown for library groups
+SELECT  items.barcode,items.itemcallnumber,biblio.title,biblio.author,items.damaged,items.itemlost,items.ccode,
+  items.withdrawn,items.notforloan,items.location,items.homebranch
+     FROM items 
+     LEFT JOIN biblioitems ON (items.biblioitemnumber=biblioitems.biblioitemnumber) 
+     LEFT JOIN biblio ON (biblioitems.biblionumber=biblio.biblionumber) 
+     LEFT JOIN library_groups ON (items.homebranch=library_groups.branchcode)
+     WHERE library_groups.parent_id=<<Group|GROUPS>>
+     ORDER BY items.homebranch, items.ccode, items.itemcallnumber ASC
+
+//---------Show Parent Group Description instead of ID------------
+
+SELECT
+    lg_parent.id,
+    lg_parent.title AS parent_title,
+    lg_parent.description AS parent_description,
+    branches.branchname,
+    lg_child.branchcode AS child_branch
+FROM
+    library_groups lg_parent
+    LEFT JOIN library_groups lg_child on (lg_parent.id = lg_child.parent_id)
+    LEFT JOIN branches ON (lg_child.branchcode = branches.branchcode)
+
+WHERE
+    lg_parent.parent_id = 1
