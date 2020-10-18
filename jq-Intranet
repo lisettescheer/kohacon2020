@@ -1,0 +1,30 @@
+//Staff Attribute
+$(document).ready(function () {
+ $(".loggedinusername:contains('MOS')").attr('lcldstaff');
+  if ($(".loggedinusername").attr('lcldstaff')) {
+ //Staff Purchase Suggestion Change
+       if (window.location.href.indexOf("suggestion/suggestion.pl") > -1) {
+          $("li:contains('Notes')").prepend("Please ask patron if they would like ILL if not purchased by the library and put 'ILL yes' or 'ILL no' in the notes field. Also please initial.");
+}
+//Other code I mentioned about shelving locations
+    $('td.ci-shelvinglocation:contains("Book Storage")').css('background-color','#368BC1');
+        $('td.ci-shelvinglocation:contains("New")').css('background-color','##DC381F');}
+//Hides Purchase Suggestion options from non LCLD Staff members      
+         else {
+$("#suggestiontabs li:contains('LCLD Accepted')").hide();
+$("#suggestiontabs li:contains('LCLD Hold Placed')").hide();
+$("#suggestiontabs li:contains('Sent to Adult')").hide();
+$("#suggestiontabs li:contains('Sent to Youth')").hide();
+$("#suggestiontabs li:contains('Sent to ILL')").hide();
+$("#suggestiontabs li:contains('ILL in Process')").hide();
+$("#suggestiontabs li:contains('Accepted - OD')").hide();
+ }
+        });
+        
+//Turn off Copy to all Libraries button when adding a holdiay to the calendar.         
+$(document).ready(function() {
+var0 = $('body').is("#tools_holidays");
+if(var0 !=0) {
+$("ol li:contains('Copy to all libraries')").remove();
+     }
+});
